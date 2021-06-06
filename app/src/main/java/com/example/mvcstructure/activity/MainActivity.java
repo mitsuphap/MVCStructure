@@ -1,9 +1,10 @@
 package com.example.mvcstructure.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mvcstructure.R;
 import com.example.mvcstructure.util.ScreenUtils;
@@ -20,5 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Width = " + screenWidth + " Height = " + screenHeight,
                 Toast.LENGTH_SHORT);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            //Run on Android 21+
+        } else {
+            //Run on Android 1-20
+        }
     }
 }
