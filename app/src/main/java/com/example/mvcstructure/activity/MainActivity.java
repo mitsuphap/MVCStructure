@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.contentContainer, MainFragment.newInstance(123), "MainFragment")
                     .commit();
 
+            SecondFragment secondFragment = SecondFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.contentContainer,
+                            secondFragment,
+                            "SecondFragment")
+                    .detach(secondFragment)
+                    .commit();
+
         }
     }
 
@@ -49,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            MainFragment fragment = (MainFragment)
+            MainFragment mainFragment = (MainFragment)
                     getSupportFragmentManager().findFragmentByTag("MainFragment");
-            fragment.setHelloText("Woo Hooooooo");
+            mainFragment.setHelloText("Woo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\nWoo Hooooooo\n");
         }
     }
 
@@ -64,7 +72,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_second_fragment:
+            case R.id.action_first_tab: {
+                MainFragment mainFragment = (MainFragment)
+                        getSupportFragmentManager().findFragmentByTag("MainFragment");
+                SecondFragment secondFragment = (SecondFragment)
+                        getSupportFragmentManager().findFragmentByTag("SecondFragment");
+                getSupportFragmentManager().beginTransaction()
+                        .attach(mainFragment)
+                        .detach(secondFragment)
+                        .commit();
+                return true;
+            }
+
+            case R.id.action_second_tab: {
+
+                MainFragment mainFragment = (MainFragment)
+                        getSupportFragmentManager().findFragmentByTag("MainFragment");
+                SecondFragment secondFragment = (SecondFragment)
+                        getSupportFragmentManager().findFragmentByTag("SecondFragment");
+                getSupportFragmentManager().beginTransaction()
+                        .attach(secondFragment)
+                        .detach(mainFragment)
+                        .commit();
+                return true;
+            }
+
+            case R.id.action_second_fragment: {
 
                 Fragment fragment = getSupportFragmentManager()
                         .findFragmentById(R.id.contentContainer);
@@ -72,14 +105,23 @@ public class MainActivity extends AppCompatActivity {
                 if (fragment instanceof SecondFragment == false) {
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.from_right, R.anim.to_left,
-                                                    R.anim.from_left, R.anim.to_right)
+                                    R.anim.from_left, R.anim.to_right)
                             .replace(R.id.contentContainer,
                                     SecondFragment.newInstance())
                             .addToBackStack(null)
                             .commit();
+
+                    SecondFragment secondFragment = SecondFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentContainer,
+                                    secondFragment,
+                                    "SecondFragment")
+                            .detach(secondFragment)
+                            .commit();
                 }
 
                 return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
